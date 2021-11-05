@@ -23,7 +23,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-//var valor=false;
 
 function BasicSelect(getTopTracks) {
   const [orden, setOrden] = useState('');
@@ -44,7 +43,7 @@ function BasicSelect(getTopTracks) {
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ width: 200, height: 50, mt: 0, mb:2 }} >
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
         <Select
@@ -63,8 +62,10 @@ function BasicSelect(getTopTracks) {
 }
 
 
-const SearchTracks = ({ validateQTrack, getTopTracks, deleteTracks, tracks, valor }) => (
-  <Paper className="paper defaultPaper">
+const SearchTracks = ({ validateQTrack, getTopTracks, deleteTracks, tracks, valor }) => {
+ 
+  return (
+  <Paper className="paper defaultPaper"  >
 
     <TextField
       id="q_track"
@@ -74,22 +75,19 @@ const SearchTracks = ({ validateQTrack, getTopTracks, deleteTracks, tracks, valo
       onKeyPress={(e) => validateQTrack(e)} // este es el evento que escucha escritura en el campo principal
     />
 
+    {BasicSelect(getTopTracks)}
+
     {/* evento de click sobre boton de icono de busqueda */}
     {console.log("Valor de tracks.length antes de preguntar para borrar:", tracks.length)}
     
-    {/* <Tooltip title="Eliminar los tutoriales">  */}
-
-    {tracks.length ? valor=false : valor=true}
-     
+    {/* Para habilitar y deshabilitar el valor para propiedad disabled del boton Eliminart Todos  */}
+    {tracks.length ? valor=false : valor=true} 
      
     <Button
       variant="outlined"
       color="primary"
       onClick={() => {
         console.log("Llamado a funcion deleteTracks");
-        //console.log("Valor de e.type: ", e);
-        //console.log("Valor de e.type: ", e.type);
-        //console.log("Valor de e.key: ", e.key)
         deleteTracks();
       }}
       startIcon={<DeleteIcon />}
@@ -113,23 +111,22 @@ const SearchTracks = ({ validateQTrack, getTopTracks, deleteTracks, tracks, valo
     </Tooltip>
 
     <Tooltip title="Agregar Tutorial">
-      <Fab color="primary"
+      <Fab 
+        color="primary"
         size="medium"
         aria-label="add"
-        onClick={() => {
-          console.log("Llamado a funcion verDetalles ");
-
-        }}
+        sx = {{position: "absolute", bottom: 16, right: 16}}
+        onClick={() => {console.log("Llamado a funcion verDetalles ");}}
       >
         <AddIcon />
       </Fab>
-    </Tooltip>
+    </Tooltip>  
     
-    {BasicSelect(getTopTracks)}
+    {/* {BasicSelect(getTopTracks)} */}
+
   </Paper>
+  );
 
-
-
-);
+};
 
 export default SearchTracks;

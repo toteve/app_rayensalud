@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import lyrics from "./../../assets/img/lyrics.png";
 import back from "./../../assets/img/back.png";
 
-// lo llama track.js con type="Ver_tutorial" e index.js(Lyrics) con type="Back"
+// lo llama track.js con type="Ver_tutorial" e index.js(Form) con type="Back"
 // lo llama index.js(Lyrics) con to="/" y track.js  con to={`/tutorials/${id}`}
 const ButtonPrimary = ({ type, to }) => (
   <Link className="buttonPrimary" to={to}>

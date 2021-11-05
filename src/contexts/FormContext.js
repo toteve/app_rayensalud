@@ -1,4 +1,4 @@
-// componente de las liricas, aqui importa componentes de react requeridos para state y context
+
 import React, { createContext, useState, useEffect } from "react";
 
 // importa las rutas que se visitaran para las liricas
@@ -19,7 +19,7 @@ const FormContextProvider = ({ children }) => {
 
   console.log("valor de commontrack_id en FormContextProvider: ", commontrack_id);
 
-  // define los estados iniciales de la componente de las liricas 
+  // define los estados iniciales de la componente de Form
   const [doneFetchTrack, setDoneFetchTrack] = useState(false);
   const [track, setTrack] = useState([]);
   const [type1, setType1] = useState("");
@@ -32,11 +32,9 @@ const FormContextProvider = ({ children }) => {
   useEffect( () => getTrack(commontrack_id), [commontrack_id]);
   
 
-  // use effect para leer las liricas que corresponden a la track seleccionada relacionada por id
-  // useEffect(() => updateTrack(commontrack_id), [commontrack_id]);
+  
 
-
-  // funcion constante tipo flecha que recibe un id y procede a buscar esa pista segun su ID
+  // funcion constante tipo flecha que recibe un id y procede a buscar ese tutorial segun su ID
   const getTrack = (commontrack_id) => {
     console.log("Const trackGet su valor como funcion en el contexto:",trackGet(commontrack_id));
 
@@ -49,22 +47,21 @@ const FormContextProvider = ({ children }) => {
 
         setDoneFetchTrack(true);
         setType1("Ver_tutorial");
-        // setTrack(body);
-        // !Array.isArray(body);
+        
         !Array.isArray(body) && setTrack(body);
-        // console.log("Valor de Track actualizado en GetTrack: ", track);
-        // setTrack(body);
+        
       })
       .catch((err) => console.log(err));
   };
 
   // funcion constante tipo flecha que recibe un id y procede a buscar LA LIRICA de la PISTA segun su ID
-  const updateTrack = (commontrack_id, track ) => {
+  const updateTrack = (commontrack_id, c1, c2, c3, c4 ) => {
     console.log("Const trackUpdate su valor como funcion en el contexto:",trackUpdate(commontrack_id));
+
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(track)
+      body: JSON.stringify({c1, c2, c3, c4})
     }; 
     fetch(trackUpdate(commontrack_id),requestOptions)
       .then((res) => res.json())
@@ -72,15 +69,15 @@ const FormContextProvider = ({ children }) => {
         var body = data;
         console.log("Valor de data en updateTracks:",data);
         console.log("Valor de body en updateTracks:",body);
-        // setDoneFetchLyrics(true);
+        
         setDoneFetchTrack(true);
         !Array.isArray(body) && setTrack(body);
-        //!Array.isArray(body) && setLyrics(body.lyrics.lyrics_body);
+        
       })
       .catch((err) => console.log(err));
   }; 
 
-  // return de LyricsContextProvider donde se definen las componentes y funciones a las que pueden
+  // return de FormContextProvider donde se definen las componentes y funciones a las que pueden
   // tener acceso las componentes hijos
   return (
     <FormContext.Provider

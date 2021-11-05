@@ -19,16 +19,12 @@ const TutorsContextProvider = ({ children }) => {
   const [text, setText] = useState("Top 10 Tutoriales en WEB"); // texto inicial a usar
   const [tracks, setTracks] = useState([]); // arreglo de tracks de SONGS, inicial vacio
   
-  //const [topbar, setTopbar] = useState("Tutoriales Disponibles en la Web"); // texto titulo AppBar
-  // life cycle hooks - you can define all the useEffect that you wont 
-  // este useEffect se ejecuta al cargar el componente SongsContextProvider y llama a una funcion
-  // interna getTopTracks() 
+  
   useEffect(() => {
     getTopTracks("nombre");
   }, []);
 
   // funcion getTopTracks(), usa la ruta chartTracksGet() importada desde index.js de carpeta constants
-  // trataremos de convertir a async/await
   const getTopTracks = (campo) => {
     console.log("Const chartTracksGet su valor como funcion en el contexto:",chartTracksGet());
     setCurrentQTrack(" ");
@@ -39,18 +35,7 @@ const TutorsContextProvider = ({ children }) => {
         setDoneFetch(true); // actualiza estado de ruta
         var track_list  = data;
 
-        console.log("Valor de data en getTopTracks:",data);
-        console.log("Valor de track_list en getTopTracks:",track_list);
-        console.table(data);
-        /* console.table(data.sort( function(a, b) { 
-                                 if(a.nombre < b.nombre) return -1;
-                                 if(a.user > b.user) return 1; 
-                                 return 0;} ) ); */
-        //track_list = data.sort(((a, b) => b.nombre - a.nombre));
-        /* track_list = data.sort( function(a, b) { 
-                                if(a.nombre < b.nombre) return -1;
-                                if(a.user > b.user) return 1; 
-                                return 0;} ); */
+        
         if (track_list.length > 0)
         {
 
@@ -62,9 +47,6 @@ const TutorsContextProvider = ({ children }) => {
           track_list = data.reverse(data.fecha); // funciona para ascendente fecha
           }
             
-          //track_list = data.reverse(data.fecha);  ascendente por fecha
-          //track_list = data.sort(data.nombre);  ascendente por nombre
-          //track_list = data.reverse(data.nombre);  descendente por nombre
           setText("Top 10 Tutoriales en WEB");
           //setTopbar("Tutoriales Disponibles en la Web"); 
           console.table(track_list);
@@ -83,7 +65,6 @@ const TutorsContextProvider = ({ children }) => {
   };
 
   // funcion getTracks(), usa la ruta trackSearch() importada desde index.js de carpeta constants
-  // HAY QUE REVISAR QUIEN LA INVOCA PARA PASAR EL PARAMETRO q_track
   const getTracks = (q_track) => {
     console.log("Const trackSearch su valor como funcion en el contexto:",trackSearch(q_track));
     fetch(trackSearch(q_track))
@@ -91,8 +72,6 @@ const TutorsContextProvider = ({ children }) => {
       .then((data) => {
         const track_list = data;
         setDoneFetch(true);
-        console.log("Valor de data en el contexto:",data);
-        console.log("Valor de track_list en el contexto:",track_list);
         setText(track_list.length ? "Results" : "No Results");
         setTracks(track_list);
       })
@@ -100,7 +79,7 @@ const TutorsContextProvider = ({ children }) => {
   };
 
   // esta funcion recibe un evento(e) que es la escritura en la caja de texto que tiene un id=q_track
-  // luego toma el valor y realiza una case-sensitive para ir buscando a medida que se escribe nombre
+  // luego toma el valor y realiza una case-sensitive 
   // del tutorial valor: q_track = document.querySelector("#q_track").value.toLowerCase().trim()
   const validateQTrack = (
     e,
@@ -128,9 +107,7 @@ const TutorsContextProvider = ({ children }) => {
   };
 
   const deleteTracks = () => {
-    //console.log("Const e su valor en funcion delete_tracks:", e);
-    //console.log("Const e.target.va su valor en funcion delete_tracks:", e.target.value);
-
+    
     console.log("Const deleteAlltracks su valor como funcion en el contexto:",deleteAlltracks());
     setCurrentQTrack(" ");
     
@@ -144,15 +121,7 @@ const TutorsContextProvider = ({ children }) => {
         console.table(data);
         setText("Todos los tutoriales han sido eliminados");
         getTopTracks("nombre");
-                
-        /* if (tracks.length > 0) {
-          alert("Tutoriales no han sido eliminados en deleteTracks");  
-         }
-         else
-         {
-          alert("Tutoriales han sido eliminados en deleteTracks"); // vacia es la response del array
-         } */
-            
+               
         console.table(track_list);
         // setTracks(track_list); // actualiza estado de array de tracks
 
@@ -163,7 +132,7 @@ const TutorsContextProvider = ({ children }) => {
 
   const convertir = (fecha) => {
 
-    //var fechahoy = new Date();
+    /* //var fechahoy = new Date();
     var fulldate = new Date(fecha);
   
     console.log("Fecha recibida del ENDPOINT como Datetime: ", fecha);
@@ -175,10 +144,10 @@ const TutorsContextProvider = ({ children }) => {
     console.log("Fecha original: ", fulldate.toLocaleDateString(options));
     //console.log("Fecha convertida: ", fulldate.toLocaleDateString("es-ES", options));
   
-    var currentDate = fulldate.toLocaleDateString(options);
+    var currentDate = fulldate.toLocaleDateString(options); */
    
   
-    /* var monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+    var monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
     "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
   
     console.log("Valor de fecha recibido de Array en funcion: ", fecha);
@@ -202,7 +171,7 @@ const TutorsContextProvider = ({ children }) => {
     var mesLetras = monthNames[parseInt(twoDigitMonth,10)-1];
     var currentDate = twoDigitDate + " " + mesLetras + " " + fullDate.getFullYear();
   
-    console.log("Fecha convertida: ", currentDate); */
+    console.log("Fecha convertida: ", currentDate); 
   
   
      return currentDate;

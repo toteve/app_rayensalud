@@ -1,10 +1,12 @@
 // importamos el useContext
 import React, { useContext } from "react";
 
-// importamos solo la parte de export const SongsContext de SongContext.js
+// importamos solo la parte de export const TutorsContext de TutorsContext.js
 import { TutorsContext } from "./../../contexts/TutorsContext";
 
-// import Maerial UI
+
+
+// import Material UI
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
@@ -14,7 +16,7 @@ import album from "./../../assets/img/album.png";
 
 // Importa un componente comun
 import ButtonPrimary from "./../Common/ButtonPrimary";
-//import { ModeCommentTwoTone } from "@material-ui/icons";
+
 
 
 
@@ -23,10 +25,8 @@ import ButtonPrimary from "./../Common/ButtonPrimary";
 
 const Track = ({ id, nombre, profesor, fecha }) => { 
   
- // defines que elementos del Contexto de SongsContext vas a utilizar
+ // defines que elementos del Contexto de TutorsContext vas a utilizar
  const { convertir } = useContext(TutorsContext); 
-  
-  
   
  return (
   <Grid item xs={12} sm={6}>
@@ -46,7 +46,11 @@ const Track = ({ id, nombre, profesor, fecha }) => {
           <span>{profesor}</span>
         </li>
         <li>
-          <ButtonPrimary type="Ver_tutorial" to={`/tutorials/${id}`} /> {/* llamada a BP para Tutoriales */}
+          <ButtonPrimary 
+              type="Ver_tutorial" 
+              to={`/tutorials/${id}`} 
+              
+              /> {/* llamada a BP para Tutoriales */}
         </li>
       </ul>
     </Paper>

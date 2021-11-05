@@ -1,32 +1,44 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 
+
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import ClearIcon from '@material-ui/icons/Clear';
+
+import track1 from "./../../assets/img/track.png";
+import album1 from "./../../assets/img/album.png";
+
+
+import ButtonPrimary from "../Common/ButtonPrimary";
+
 import { FormContext } from "../../contexts/FormContext";
 
-// {track}, type1
-const Details = ({track}) => {
+const Details = ({track, boton}) => {
     const { id, nombre, profesor, materia, fecha } = track;
-    const { type1 } = useContext(FormContext);
+    const { updateTrack } = useContext(FormContext);
 
-    var valor1 = true;
+    const [valor, setValor] = useState(true);
+    const [valor2, setValor2] = useState(true);    
+   
+    
+    console.log("Valor de boton en Detail.js recibido como parametro: ", boton);
+    console.log("Valor de track en Detail.js tomado de FormContext: ", track);
 
     
-    console.log("Valor de type1 en Detail.js traido del contextlyrics: ", type1);
- 
-    type1 === "Ver_tutorial" ? valor1 = true : valor1 = false;
-
     // defino estado inicial al editar
-    // const [track, setTrack] = useState(track);
+    // const [track, setTrack] = useState(track1);
     const [campo1, setNombre] = useState(nombre);
     const [campo2, setProfesor] = useState(profesor);
     const [campo3, setMateria] = useState(materia);
     const [campo4, setFecha] = useState(fecha);
 
-    console.log("Valor de type1 en details.js: ", type1);
-    console.log("Valor de Track en DETAIL.JS al entrar: ", track);
 
+    //function cambio(valor1) { return valor1=false};
 
     // Funciones de Actualizacion
     
@@ -55,25 +67,7 @@ const Details = ({track}) => {
     }
   
   
-    // const updateNewTaskValue = (e) => setNewTaskName(e.target.value);
-
-     /* function changeField(e) {
-        const  { value, name } = e.target;
-        console.log("Valor de Track antes de actualizar: ", track);
-        console.log("Valor del evento (e) CHANGEfIELD: ", e);
-        console.log("Valor del evento (e.target) CHANGEfIELD: ", e.target);
-        console.log("Valor de name en changeField: ",name);
-        console.log("Valor de value en changeField: ",value);
-
-        // [name] = value;
-        
-        setTrack({[name]: value});
-        //this.setState({ [name]: value });
-        console.log("Valor de Track despues de actualizar: ", track); 
-    } */
     
-
-
 
     return (
         <Paper className="paper defaultPaper">
@@ -90,7 +84,7 @@ const Details = ({track}) => {
                 <div style={{ width: '100%', marginBottom: 12 }}>
                     <TextField
 
-                        disabled={valor1}
+                        disabled={valor}
                         id="outlined-basic"
                         name="nombre"
                         label="Titulo"
@@ -100,11 +94,10 @@ const Details = ({track}) => {
                     />
                 </div>
 
-                {/* {console.log("Valor textfield Titulo: ", TextField.getValue)} */}
-
+                
                 <div style={{ width: '100%', marginBottom: 12 }}>
                     <TextField
-                        disabled={valor1}
+                        disabled={valor}
                         id="outlined-basic"
                         label="Profesor"
                         name="profesor"
@@ -117,7 +110,7 @@ const Details = ({track}) => {
                 <div style={{ width: '100%', marginBottom: 12 }}>
                     <TextField
 
-                        disabled= {valor1}
+                        disabled= {valor}
                         id="outlined-basic"
                         label="Materia"
                         name="materia"
@@ -130,7 +123,7 @@ const Details = ({track}) => {
                 <div style={{ width: '100%', marginBottom: 12 }}>
                     <TextField
 
-                        disabled={valor1}
+                        disabled={valor}
                         id="outlined-basic"
                         label="Fecha"
                         name="fecha"
@@ -142,8 +135,50 @@ const Details = ({track}) => {
 
             </Box>
 
-             {/* {console.log("c1 c2 c3 c4: ", campo1, campo2, campo3, campo4)}   
-             {track={id, campo1, campo2, campo3, campo4}} */}
+             {console.log("c1 c2 c3 c4 e ID: ", campo1, campo2, campo3, campo4, id)}   
+             
+
+             <ButtonPrimary type="Back" to="/" /> {/* llamada a BP para retorno al Home */}
+
+                {/* BOTON DE EDITAR TUTORIAL */}
+                <Button   
+                    variant="outlined"
+                    color="primary"
+                    onClick={ () => {setValor(false); setValor2(false)} }
+                    startIcon= { <EditIcon />  }
+                    disabled = {false}          
+                >
+                    <img alt={"Editar tutorial"} src={track1} />
+                  {" Editar tutorial"}
+
+                </Button>
+                
+                
+                
+                {/* BOTON DE MODIFICAR TUTORIAL */}
+                <Link className="buttonPrimary" to={`/updatetutorial/${track.id}`}>   
+
+                <Button   
+                    variant="outlined"
+                    color="primary"
+                    onClick={ () => { 
+                        console.log("Llamado a funcion updateTrack"); 
+                        console.log("Valor track antes de llamar a updateTrack: ",track);
+                        updateTrack(track.id, campo1, campo2, campo3, campo4); 
+                   
+                    }}
+                    startIcon= { <ClearIcon /> }
+                    disabled = {valor2}          
+                >
+                    <img alt={"Modificar tutorial"} src={album1} />
+
+                  {" Modificar tutorial"}
+
+                </Button>
+
+                </Link>    
+
+
         </Paper>
     );
 };
